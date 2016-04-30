@@ -1,7 +1,13 @@
 2016-04-30 Dong H. Ahn <ahn1@llnl.gov>
-	* list of files:
+	* git show --stat 0dbc73f1fd1c2d28531f18c8538ee5baca1accf8 \
+	21aaf393d68e20bd5975a8d3f9cb0910963108e0 \
+	776595a43b758b2aba0ef408e4b88a93356021fa \
+	79bbfd89c06cdf5b72b2497a53b9a51d061a20a7 \
+	3728c0a4cb373aceb64ac3f27112319aa374e736:
 	Modernize the use of autotools 
 	Drop support for bundling foreign library sources for easier packaging
+	Too many files have been changed and use git show --stat above
+	so that one can retrieve the list of files that have changed
 
 
 2014-04-30 Matt LeGendre <legendre1@llnl.gov> Dong H. Ahn <ahn1@llnl.gov>
