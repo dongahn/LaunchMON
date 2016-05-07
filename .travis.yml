@@ -9,12 +9,12 @@ addons:
   apt:
     sources:
     packages:
-      - boost
-      - libgcrypt
-      - libgpg-error
-      - libopenmpi-dev
+      - libelf-dev
+      - libboost-dev
       - libmunge-dev
       - munge
+      - libgcrypt11
+      - libopenmpi-dev
 
 script:
  - ./bootstrap && mkdir build && cd build 
