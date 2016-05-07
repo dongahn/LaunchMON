@@ -1,0 +1,21 @@
+language: c
+
+sudo: false
+
+compiler:
+  - gcc
+
+addons:
+  apt:
+    sources:
+    packages:
+      - boost
+      - libgcrypt
+      - libgpg-error
+      - libopenmpi-dev
+      - libmunge-dev
+      - munge
+
+script:
+ - bootstrap && ./configure --with-test-rm=orte && make -j3 && make -j3 check
+
