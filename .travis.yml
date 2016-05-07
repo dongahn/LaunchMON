@@ -13,9 +13,8 @@ addons:
     packages:
       - libelf-dev
       - libboost-dev
-      - libmunge-dev
-      - munge
       - libopenmpi-dev
+      - munge
 
 before_install:
   - case "$CC" in *+install)  CC=${CC//+*}; export TEST_INSTALL=it;; esac
