@@ -18,4 +18,3 @@ addons:
 
 script:
  - bootstrap && ./configure --with-test-rm=orte && make -j3 && make -j3 check
-
