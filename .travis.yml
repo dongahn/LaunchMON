@@ -17,4 +17,6 @@ addons:
       - munge
 
 script:
- - bootstrap && ./configure --with-test-rm=orte && make -j3 && make -j3 check
+ - bootstrap && make build && cd build 
+ - ../configure --with-test-rm=orte --with-test-ncore-per-CN=2 && make -j3
+ - make -j3 check
