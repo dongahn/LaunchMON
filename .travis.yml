@@ -9,11 +9,10 @@ addons:
   apt:
     sources:
     packages:
-      - libelf-dev
+      - libelf
       - libboost-dev
       - libmunge-dev
       - munge
-      - libgcrypt11
       - libopenmpi-dev
 
 script:
