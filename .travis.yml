@@ -9,7 +9,7 @@ addons:
   apt:
     sources:
     packages:
-      - libelf
+      - libelf-dev
       - libboost-dev
       - libmunge-dev
       - munge
