@@ -1,29 +1,29 @@
 /*
  * $Header: /usr/gapps/asde/cvs-vault/sdb/launchmon/src/linux/sdbg_linux_std.hxx,v 1.5.2.2 2008/02/20 17:37:57 dahn Exp $
  *--------------------------------------------------------------------------------
- * Copyright (c) 2008, Lawrence Livermore National Security, LLC. Produced at 
- * the Lawrence Livermore National Laboratory. Written by Dong H. Ahn <ahn1@llnl.gov>. 
+ * Copyright (c) 2008, Lawrence Livermore National Security, LLC. Produced at
+ * the Lawrence Livermore National Laboratory. Written by Dong H. Ahn <ahn1@llnl.gov>.
  * LLNL-CODE-409469. All rights reserved.
  *
- * This file is part of LaunchMON. For details, see 
+ * This file is part of LaunchMON. For details, see
  * https://computing.llnl.gov/?set=resources&page=os_projects
  *
  * Please also read LICENSE.txt -- Our Notice and GNU Lesser General Public License.
  *
- * 
- * This program is free software; you can redistribute it and/or modify it under the 
- * terms of the GNU General Public License (as published by the Free Software 
+ *
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License (as published by the Free Software
  * Foundation) version 2.1 dated February 1999.
  *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY 
- * WARRANTY; without even the IMPLIED WARRANTY OF MERCHANTABILITY or 
- * FITNESS FOR A PARTICULAR PURPOSE. See the terms and conditions of the GNU 
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the IMPLIED WARRANTY OF MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the terms and conditions of the GNU
  * General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public License along 
- * with this program; if not, write to the Free Software Foundation, Inc., 59 Temple 
+ * You should have received a copy of the GNU Lesser General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  * Place, Suite 330, Boston, MA 02111-1307 USA
- *--------------------------------------------------------------------------------			
+ *--------------------------------------------------------------------------------
  *
  *  Update Log:
  *        Sep 02 2010 DHA: Added MPIR_attach_fifo support
@@ -32,11 +32,11 @@
  *        Mar  06 2008 DHA: Deprecate GLUESYM support
  *        Mar  11 2008 DHA: Added PowerPC support (BlueGene FEN)
  *        Feb  09 2008 DHA: Added LLNS Copyright
- *        Aug  15 2007 DHA: Change C macroes to C++ style: const char * const 
+ *        Aug  15 2007 DHA: Change C macroes to C++ style: const char * const
  *        Jan  09 2006 DHA: Linux X86-64 support
  *        Mar  22 2006 DHA: Created file.
  *
- */ 
+ */
 
 #ifndef SDBG_LINUX_STD_HXX
 #define SDBG_LINUX_STD_HXX 1
@@ -90,7 +90,7 @@ const char * const LAUNCH_PROCTABLE_SIZE    = "MPIR_proctable_size";
 
 //! LAUNCH_ACQUIRED_PREMAIN:
 /*!
-    Symbol that tells whether a debugger can force the main 
+    Symbol that tells whether a debugger can force the main
     for the first attach point
 */
 const char * const LAUNCH_ACQUIRED_PREMAIN  = "MPIR_acquired_pre_main";
@@ -115,7 +115,7 @@ const char * const LAUNCH_ATTACH_FIFO       = "MPIR_attach_fifo";
 
 //! LOADER_BP_SYM:
 /*!
-    Symbol within the dynamic linker, which gets invoked on shared library 
+    Symbol within the dynamic linker, which gets invoked on shared library
     load
 */
 const char * const LOADER_BP_SYM            = "_dl_debug_state";
@@ -133,7 +133,7 @@ const char * const LOADER_R_DEBUG           = "_r_debug";
 */
 const char * const LOADER_START             = "_start";
 const char * const LIBC_IDEN                = "libc.";
-const char * const LIBPTHREAD_IDEN          = "libpthread."; 
+const char * const LIBPTHREAD_IDEN          = "libpthread.";
 const char * const RESOURCE_HANDLER_SYM     = "totalview_jobid";
 const char * const ERRMSG_PTRACE            = " error returned from ptrace ";
 const char * const ERRMSG_KILL              = " error returned from kill ";
@@ -151,7 +151,7 @@ struct my_thrinfo_t {
   pid_t ti_lid;
 };
 
-inline 
+inline
 bool glic_backtrace_wrapper (std::string &bt)
 {
   using namespace std;
@@ -171,25 +171,25 @@ bool glic_backtrace_wrapper (std::string &bt)
 
   /* demangle support */
   char **demangleStSyms = (char **) malloc (size * sizeof(char *));
-  size_t dnSize; 
-  if (!demangleStSyms) 
+  size_t dnSize;
+  if (!demangleStSyms)
     ssUsed = stacksymbols;
-  else 
+  else
     {
       int i;
       string delims("()+[]");
       /* starting from 2 to remove two top stack frames */
-      for (i=2; i < size; ++i) 
+      for (i=2; i < size; ++i)
 	{
 	  char *demangledName;
 	  int status;
 	  string targetStr (stacksymbols[i]);
 	  string binName, funcName, newStr;
 	  string::size_type begIdx, endIdx;
-	  
-	  begIdx = targetStr.find_first_not_of (delims); 	
+
+	  begIdx = targetStr.find_first_not_of (delims);
 	  endIdx = targetStr.find_first_of (delims, begIdx);
-	  if ( (begIdx == string::npos) || (endIdx == string::npos) ) 
+	  if ( (begIdx == string::npos) || (endIdx == string::npos) )
 	    binName = "BinaryNameNA";
 	  else
 	    {
@@ -198,15 +198,15 @@ bool glic_backtrace_wrapper (std::string &bt)
 	      binName = basename(bn);
 	      free(bn);
 	    }
-	  
+
 	  begIdx = targetStr.find_first_not_of (delims, endIdx);
 	  endIdx = targetStr.find_first_of (delims, begIdx);
-	  if ( (begIdx == string::npos) || (endIdx == string::npos) ) 
+	  if ( (begIdx == string::npos) || (endIdx == string::npos) )
 	    funcName = "FuncNameNA";
 	  else
 	    {
 	      funcName = targetStr.substr(begIdx, endIdx-begIdx);
-	      
+
 	      demangledName = abi::__cxa_demangle (funcName.c_str(), NULL, NULL, &status);
 	      if ( status < 0 )
 		newStr = binName + ": " + funcName;
@@ -219,11 +219,11 @@ bool glic_backtrace_wrapper (std::string &bt)
     }
   /* ssUsed = stacksymbols;*/
 
-  bt = "BACKTRACE: \n";  
-  /* starting from 2 to remove two top stack frames */  
+  bt = "BACKTRACE: \n";
+  /* starting from 2 to remove two top stack frames */
   for( i=2 ; i < size ; ++i)
     {
-      bt += ssUsed[i]; 
+      bt += ssUsed[i];
       bt += "\n";
     }
 
@@ -233,8 +233,8 @@ bool glic_backtrace_wrapper (std::string &bt)
 
 #if X86_ARCHITECTURE
 
-  // 
-  // 
+  //
+  //
   // insert linux X86 architecture macros here ...
   //
   //
@@ -265,8 +265,8 @@ bool glic_backtrace_wrapper (std::string &bt)
 
 #elif X86_64_ARCHITECTURE
 
-  // 
-  // 
+  //
+  //
   // insert linux X86-64 architecture macros here ...
   //
   //
@@ -311,8 +311,8 @@ bool glic_backtrace_wrapper (std::string &bt)
 
 #elif PPC_ARCHITECTURE
 
-  // 
-  // 
+  //
+  //
   // Insert linux ppc architecture macroes here ...
   // BlueGene FEN architecture is covered here.
   //
