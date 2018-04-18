@@ -333,9 +333,9 @@ main (int argc, char *argv[])
       char hn[1024];
       gethostname ( hn, 1024);
       if ( ( rc = LMON_fe_launchAndSpawnDaemons(
-                    aSession,
-   	            hn,
-	    	    launcher_argv[0],
+            aSession,
+            hn,
+            launcher_argv[0],
 		    launcher_argv,
 		    argv[5],
 		    daemon_opts,
@@ -361,7 +361,7 @@ main (int argc, char *argv[])
     {
       if ( ( rc = LMON_fe_launchAndSpawnDaemons(
                     aSession,
-   	            NULL,
+            NULL,
 		    launcher_argv[0],
 		    launcher_argv,
 		    argv[5],
@@ -449,7 +449,7 @@ main (int argc, char *argv[])
     }
 
   rc = LMON_fe_getResourceHandle ( aSession, jobid,
-                	         &jobidsize, PATH_MAX);
+                                   &jobidsize, PATH_MAX);
   if ((rc != LMON_OK) && (rc != LMON_EDUNAV))
     {
       if ( rc != LMON_EDUNAV )
