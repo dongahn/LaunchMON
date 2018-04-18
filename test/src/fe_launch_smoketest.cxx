@@ -1,29 +1,29 @@
 /*
  * $Header: $
  *--------------------------------------------------------------------------------
- * Copyright (c) 2008 ~ 2012, Lawrence Livermore National Security, LLC. Produced at 
- * the Lawrence Livermore National Laboratory. Written by Dong H. Ahn <ahn1@llnl.gov>. 
+ * Copyright (c) 2008 ~ 2012, Lawrence Livermore National Security, LLC. Produced at
+ * the Lawrence Livermore National Laboratory. Written by Dong H. Ahn <ahn1@llnl.gov>.
  * LLNL-CODE-409469. All rights reserved.
  *
- * This file is part of LaunchMON. For details, see 
+ * This file is part of LaunchMON. For details, see
  * https://computing.llnl.gov/?set=resources&page=os_projects
  *
  * Please also read LICENSE.txt -- Our Notice and GNU Lesser General Public License.
  *
- * 
- * This program is free software; you can redistribute it and/or modify it under the 
- * terms of the GNU General Public License (as published by the Free Software 
+ *
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License (as published by the Free Software
  * Foundation) version 2.1 dated February 1999.
  *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY 
- * WARRANTY; without even the IMPLIED WARRANTY OF MERCHANTABILITY or 
- * FITNESS FOR A PARTICULAR PURPOSE. See the terms and conditions of the GNU 
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the IMPLIED WARRANTY OF MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the terms and conditions of the GNU
  * General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public License along 
- * with this program; if not, write to the Free Software Foundation, Inc., 59 Temple 
+ * You should have received a copy of the GNU Lesser General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  * Place, Suite 330, Boston, MA 02111-1307 USA
- *--------------------------------------------------------------------------------			
+ *--------------------------------------------------------------------------------
  *
  *
  *  ./fe_launch_smoketest.debug /bin/hostname 9 5 pdebug `pwd`/be_kicker.debug
@@ -33,14 +33,14 @@
  *        Oct 21 2011 DHA: Added dynamic RM support.
  *        Nov 12 2009 DHA: Change BG mpirun options to cover /P running under IBM LL
  *        Mar 04 2009 DHA: Added generic BlueGene support.
- *        Jun 16 2008 DHA: Added LMON_fe_recvUsrDataBe at the end to 
- *                         coordinate the testing result with back-end 
- *                         daemons better. 
+ *        Jun 16 2008 DHA: Added LMON_fe_recvUsrDataBe at the end to
+ *                         coordinate the testing result with back-end
+ *                         daemons better.
  *        Jun 12 2008 DHA: Added GNU build system support.
  *        Mar 18 2008 DHA: Added BlueGene support.
  *        Mar 05 2008 DHA: Added invalid daemon path test.
  *        Feb 09 2008 DHA: Added LLNS Copyright.
- *        Jul 30 2007 DHA: Adjust this case for minor API changes  
+ *        Jul 30 2007 DHA: Adjust this case for minor API changes
  *        Dec 27 2006 DHA: Created file.
  */
 
@@ -57,7 +57,7 @@
 #include <lmon_api/lmon_proctab.h>
 #include <lmon_api/lmon_fe.h>
 
-#if MEASURE_TRACING_COST 
+#if MEASURE_TRACING_COST
 extern "C" {
   int begin_timer ();
   int time_stamp ( const char* description );
@@ -102,7 +102,7 @@ int statusFunc ( int *status )
 }
 
 
-int 
+int
 main (int argc, char *argv[])
 {
   using namespace std;
@@ -185,20 +185,20 @@ main (int argc, char *argv[])
       launcher_argv[2] = strdup("5");
       launcher_argv[3] = strdup("--np");
       launcher_argv[4] = strdup(argv[2]);
-      launcher_argv[5] = strdup("--exe"); 
-      launcher_argv[6] = strdup(argv[1]); 
+      launcher_argv[5] = strdup("--exe");
+      launcher_argv[6] = strdup(argv[1]);
       // manually fill the block
       //launcher_argv[7] = strdup("--block");
-      //launcher_argv[8] = strdup("R00-M0-N04"); 
+      //launcher_argv[8] = strdup("R00-M0-N04");
       // manually fill the corner
       //launcher_argv[9] = strdup("--corner");
       //launcher_argv[10] = strdup("R00-M0-N04-J07");
-      // manually fill the shape 
+      // manually fill the shape
       //launcher_argv[11] = strdup("--shape");
       //launcher_argv[12] = strdup("1x1x1x1x1");
       //launcher_argv[13] = NULL;
       launcher_argv[7] = NULL;
-      fprintf (stdout, 
+      fprintf (stdout,
         "[LMON_FE] launching the job/daemons via %s\n",
         mylauncher);
     }
@@ -216,7 +216,7 @@ main (int argc, char *argv[])
         "[LMON_FE] launching the job/daemons via %s\n",
         "mylauncher");
     }
-  else if ((rmenv_str == std::string("RC_bglrm")) 
+  else if ((rmenv_str == std::string("RC_bglrm"))
       || (rmenv_str == std::string("RC_bgprm")))
     {
       launcher_argv = (char **) malloc(8*sizeof(char *));
@@ -225,10 +225,10 @@ main (int argc, char *argv[])
       launcher_argv[2] = strdup("1");
       launcher_argv[3] = strdup("-np");
       launcher_argv[4] = strdup(argv[2]);
-      launcher_argv[5] = strdup("-exe"); 
-      launcher_argv[6] = strdup(argv[1]); 
+      launcher_argv[5] = strdup("-exe");
+      launcher_argv[6] = strdup(argv[1]);
       launcher_argv[7] = NULL;
-      fprintf (stdout, 
+      fprintf (stdout,
                 "[LMON_FE] launching the job/daemons via %s\n",
                 mylauncher);
     }
@@ -283,14 +283,14 @@ main (int argc, char *argv[])
                mylauncher);
     }
 
-  if ( ( rc = LMON_fe_init ( LMON_VERSION ) ) 
+  if ( ( rc = LMON_fe_init ( LMON_VERSION ) )
               != LMON_OK )
     {
       fprintf ( stdout, "[LMON FE] FAILED\n" );
       return EXIT_FAILURE;
     }
 
-  if ( ( rc = LMON_fe_createSession (&aSession)) 
+  if ( ( rc = LMON_fe_createSession (&aSession))
               != LMON_OK)
     {
       fprintf ( stdout, "[LMON FE] FAILED\n");
@@ -322,25 +322,25 @@ main (int argc, char *argv[])
 
 #if MEASURE_TRACING_COST
   begin_timer ();
-#endif 
+#endif
 
   if ( getenv ("FEN_RM_DISTRIBUTED") )
     {
       /*
        * If the third argument is not null, the launchMON engine
-       * gets invoked via ssh or rsh. 
+       * gets invoked via ssh or rsh.
        */
       char hn[1024];
       gethostname ( hn, 1024);
-      if ( ( rc = LMON_fe_launchAndSpawnDaemons( 
-                    aSession, 
+      if ( ( rc = LMON_fe_launchAndSpawnDaemons(
+                    aSession,
    	            hn,
 	    	    launcher_argv[0],
 		    launcher_argv,
 		    argv[5],
 		    daemon_opts,
 		    NULL,
-		    NULL)) 
+		    NULL))
                   != LMON_OK )
         {
           if ( getenv ("LMON_INVALIDDAEMON_TEST") != NULL )
@@ -359,15 +359,15 @@ main (int argc, char *argv[])
     }
   else
     {
-      if ( ( rc = LMON_fe_launchAndSpawnDaemons( 
-                    aSession, 
+      if ( ( rc = LMON_fe_launchAndSpawnDaemons(
+                    aSession,
    	            NULL,
 		    launcher_argv[0],
 		    launcher_argv,
 		    argv[5],
 		    daemon_opts,
 		    NULL,
-		    NULL)) 
+		    NULL))
                   != LMON_OK )
         {
           if ( getenv ("LMON_INVALIDDAEMON_TEST") != NULL )
@@ -388,28 +388,28 @@ main (int argc, char *argv[])
 #if MEASURE_TRACING_COST
   time_stamp ( "LMON_fe_launchAndSpawnDaemons perf" );
 #endif
- 
-  if ( ( rc = LMON_fe_getProctableSize ( 
-                aSession, 
+
+  if ( ( rc = LMON_fe_getProctableSize (
+                aSession,
                 &proctabsize ))
               !=  LMON_OK )
     {
-       fprintf ( stdout, 
+       fprintf ( stdout,
          "[LMON FE] FAILED in LMON_fe_getProctableSize\n");
        return EXIT_FAILURE;
     }
 
-  if (proctabsize != atoi(argv[2])) 
+  if (proctabsize != atoi(argv[2]))
     {
-      fprintf ( stdout, 
-        "[LMON FE] FAILED, proctabsize is not equal to the given: %ud\n", 
+      fprintf ( stdout,
+        "[LMON FE] FAILED, proctabsize is not equal to the given: %ud\n",
         proctabsize);
       return EXIT_FAILURE;
     }
 
   proctab = (MPIR_PROCDESC_EXT*) malloc (
                 proctabsize*sizeof (MPIR_PROCDESC_EXT) );
-  
+
   if ( !proctab )
     {
        fprintf ( stdout, "[LMON FE] malloc returned null\n");
@@ -418,12 +418,12 @@ main (int argc, char *argv[])
 
 #if MEASURE_TRACING_COST
   begin_timer ();
-#endif 
-  if ( ( rc = LMON_fe_getProctable ( 
-                aSession, 
+#endif
+  if ( ( rc = LMON_fe_getProctable (
+                aSession,
                 proctab,
                 &psize,
-                proctabsize )) 
+                proctabsize ))
               !=  LMON_OK )
     {
        fprintf ( stdout, "[LMON FE] FAILED\n");
@@ -434,17 +434,17 @@ main (int argc, char *argv[])
   time_stamp ( "LMON_fe_getProctable perf" );
 #endif
 
-  fprintf ( stdout, 
+  fprintf ( stdout,
     "[LMON FE] Please check the correctness of the following proctable\n");
 
   for(i=0; i < psize; i++)
     {
-      fprintf ( stdout, 
+      fprintf ( stdout,
         "[LMON FE] host_name: %s\n", proctab[i].pd.host_name);
-      fprintf ( stdout, 
+      fprintf ( stdout,
         "[LMON FE] executable_name: %s\n", proctab[i].pd.executable_name);
-      fprintf ( stdout, 
-        "[LMON FE] pid: %d(rank %d)\n", proctab[i].pd.pid, proctab[i].mpirank);      
+      fprintf ( stdout,
+        "[LMON FE] pid: %d(rank %d)\n", proctab[i].pd.pid, proctab[i].mpirank);
       fprintf ( stdout, "[LMON FE] \n");
     }
 
@@ -452,21 +452,21 @@ main (int argc, char *argv[])
                 	         &jobidsize, PATH_MAX);
   if ((rc != LMON_OK) && (rc != LMON_EDUNAV))
     {
-      if ( rc != LMON_EDUNAV ) 
+      if ( rc != LMON_EDUNAV )
         {
           fprintf ( stdout, "[LMON FE] FAILED\n");
            return EXIT_FAILURE;
         }
     }
   else
-    { 
+    {
       if (rc != LMON_EDUNAV)
-        { 	
-          fprintf ( stdout, 
+        {
+          fprintf ( stdout,
             "\n[LMON FE] Please check the correctness of the following resource handle\n");
-          fprintf ( stdout, 
+          fprintf ( stdout,
             "[LMON FE] resource handle[jobid or job launcher's pid]: %s\n", jobid);
-          fprintf ( stdout, 
+          fprintf ( stdout,
             "[LMON FE]");
        }
     }
@@ -479,10 +479,10 @@ main (int argc, char *argv[])
     }
   else
    {
-      fprintf ( stdout, 
+      fprintf ( stdout,
          "\n[LMON FE] RM type is %d\n",
            rminfo.rm_supported_types[rminfo.index_to_cur_instance]);
-      fprintf ( stdout, 
+      fprintf ( stdout,
          "\n[LMON FE] RM launcher's pid is %d\n", rminfo.rm_launcher_pid);
    }
 
@@ -536,30 +536,30 @@ main (int argc, char *argv[])
 
   rc = LMON_fe_recvUsrDataBe ( aSession, NULL );
 
-  if ( (rc == LMON_EBDARG ) 
+  if ( (rc == LMON_EBDARG )
        || ( rc == LMON_ENOMEM )
        || ( rc == LMON_EINVAL ) )
     {
       fprintf ( stdout, "[LMON FE] FAILED\n");
       return EXIT_FAILURE;
-    } 
+    }
 
   rc = LMON_fe_sendUsrDataBe ( aSession, NULL );
 
-  if ( (rc == LMON_EBDARG ) 
+  if ( (rc == LMON_EBDARG )
        || ( rc == LMON_ENOMEM )
        || ( rc == LMON_EINVAL ) )
     {
       fprintf ( stdout, "[LMON FE] FAILED\n");
       return EXIT_FAILURE;
-    } 
+    }
 
   if (getenv ("LMON_ADDITIONAL_FE_STALL"))
     {
       sleep (120);
     }
 
-  fprintf ( stdout, 
+  fprintf ( stdout,
     "\n[LMON FE] PASS: run through the end\n");
 
   return EXIT_SUCCESS;
