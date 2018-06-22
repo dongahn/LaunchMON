@@ -213,6 +213,8 @@ private:
   bool LEVELCHK(self_trace_verbosity level)
        { return (self_trace_t::self_trace().symtab_module_trace.verbosity_level >= level); }
 
+  VA get_local_entry_point (const unsigned char o);
+
   // For self tracing
   //
   std::string MODULENAME;

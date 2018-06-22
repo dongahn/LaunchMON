@@ -309,7 +309,7 @@ bool glic_backtrace_wrapper (std::string &bt)
                                       elf_wrapper
 
 
-#elif PPC_ARCHITECTURE
+#elif PPC_ARCHITECTURE || POWERLE_ARCHITECTURE
 
   //
   //

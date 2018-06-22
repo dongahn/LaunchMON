@@ -373,7 +373,7 @@ struct ps_prochandle {
 };
 
 
-#elif PPC_ARCHITECTURE
+#elif PPC_ARCHITECTURE || POWERLE_ARCHITECTURE
 
 //! linux_ppc_gpr_set_t:
 /*!

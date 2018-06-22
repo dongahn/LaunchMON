@@ -1179,7 +1179,7 @@ linux_launchmon_t::handle_mpir_variables (
               p.set_launch_hidden_bp(NULL);
             }
           la_bp = new linux_breakpoint_t();
-          la_bp->set_address_at(launch_bp_sym.get_relocated_address());
+          la_bp->set_address_at(launch_bp_sym.get_relocated_lowest_address());
 
 #if PPC_ARCHITECTURE
           //
@@ -1187,8 +1187,8 @@ linux_launchmon_t::handle_mpir_variables (
           // PowerPC Linux has begun to change the linking convention
           // such that binaries no longer export direct function
           // symbols. (e.g., .MPIR_Breakpoint). But rather, undotted
-          // global data symbols (e.g., MPIR_Breakpoint) contains the
-          // address for the corresponding function.
+          // global data symbols (e.g., MPIR_Breakpoint) is the function
+          // descriptor.
           //
           // Added indirect breakpoint support for that and use this
           // method on all PPC systems across the board including
@@ -1933,7 +1933,7 @@ linux_launchmon_t::handle_trap_after_attach_event (
 	    = dynloader_im->get_a_symbol (p.get_loader_breakpoint_sym());
 
       lo_bp = new linux_breakpoint_t();
-      addr_dl_bp = dynload_sym.get_relocated_address();
+      addr_dl_bp = dynload_sym.get_relocated_lowest_address();
       lo_bp->set_address_at ( addr_dl_bp );
 #if PPC_ARCHITECTURE
       lo_bp->set_use_indirection();
@@ -1960,10 +1960,10 @@ linux_launchmon_t::handle_trap_after_attach_event (
                   char fifopathbuf[256];
                   T_VA fifo_addr = p.get_sym_attach_fifo()->get_relocated_address();
                   get_tracer()->tracer_read_string(p,
-                                               fifo_addr,
-				               (void*) fifopathbuf,
-				               256,
-				               use_cxt);
+                                   fifo_addr,
+				                   (void*) fifopathbuf,
+				                   256,
+				                   use_cxt);
                   std::string fip = fifopathbuf;
                   p.rmgr()->set_attach_fifo_path(fip);
 
@@ -1973,6 +1973,7 @@ linux_launchmon_t::handle_trap_after_attach_event (
 	          //
 	          get_tracer()->tracer_continue (p, use_cxt);
                   int fifofd = 0;
+                  std::cout << fifopathbuf << std::endl;
                   if ( (fifofd = open(fifopathbuf, O_WRONLY)) >= 0)
                     {
                       char wakeup = (char) 1;
@@ -2157,7 +2158,7 @@ linux_launchmon_t::handle_trap_after_exec_event (
 	  //
 	  // Corner case; we deal with a heuristics
 	  //
-#if PPC_ARCHITECTURE
+#if PPC_ARCHITECTURE || POWERLE_ARCHITECTURE
           //
           // DHA Mar 05 2009
 	  // There're systems that do not directly
@@ -2203,10 +2204,10 @@ linux_launchmon_t::handle_trap_after_exec_event (
       dynloader_im->compute_reloc();
 
       lo_bp = new linux_breakpoint_t();
-      addr_dl_bp = dynload_sym.get_relocated_address();
+      addr_dl_bp = dynload_sym.get_relocated_lowest_address();
       lo_bp->set_address_at ( addr_dl_bp );
 
-#if PPC_ARCHITECTURE
+#if PPC_ARCHITECTURE || POWERLE_ARCHITECTURE
       lo_bp->set_use_indirection();
       T_VA adjusted_indirect_addr;
       //
@@ -3172,7 +3173,7 @@ linux_launchmon_t::handle_thrcreate_request (
 #if X86_ARCHITECTURE || X86_64_ARCHITECTURE
           thread_base_t<SDBG_LINUX_DFLT_INSTANTIATION> *thrinfo
             = new linux_x86_thread_t();
-#elif PPC_ARCHITECTURE
+#elif PPC_ARCHITECTURE || POWERLE_ARCHITECTURE
           thread_base_t<SDBG_LINUX_DFLT_INSTANTIATION> *thrinfo
             = new linux_ppc_thread_t();
 #endif

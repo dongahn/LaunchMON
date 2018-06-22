@@ -592,7 +592,7 @@ linux_x86_process_t::basic_init (
 }
 
 
-#elif PPC_ARCHITECTURE
+#elif PPC_ARCHITECTURE || POWERLE_ARCHITECTURE
 
 
 ////////////////////////////////////////////////////////////////////
