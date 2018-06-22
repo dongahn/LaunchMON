@@ -206,6 +206,9 @@
 /* Define to the version of this package. */
 #undef PACKAGE_VERSION
 
+/* Define 1 for POWERLEC_ARCHITECTURE */
+#undef POWERLE_ARCHITECTURE
+
 /* Define 1 for PPC_ARCHITECTURE */
 #undef PPC_ARCHITECTURE
 

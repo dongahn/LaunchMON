@@ -72,6 +72,12 @@ AC_DEFUN([X_AC_PLATFORM], [
               AC_SUBST(LNCHR_BIT_FLAGS, -m32)
               AC_DEFINE(BIT64, 1, [64bit])
               ;;
+    *powerpc64le*)AC_DEFINE(POWERLE_ARCHITECTURE,1,[Define 1 for POWERLEC_ARCHITECTURE])
+              ac_have_known_isa="yes"
+              ac_target_isa="powerle"
+              AC_SUBST(LNCHR_BIT_FLAGS, -m64)
+              AC_DEFINE(BIT64, 1, [64bit])
+              ;;
     *powerpc*)AC_DEFINE(PPC_ARCHITECTURE,1,[Define 1 for PPC_ARCHITECTURE])
               ac_have_known_isa="yes"
               ac_target_isa="power"

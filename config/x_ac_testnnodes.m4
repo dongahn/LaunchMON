@@ -198,7 +198,7 @@ AC_DEFUN([X_AC_TEST_RM], [
         AC_SUBST(RM_TYPE, RC_ibm_spectrum)
       fi
     else
-      rm_default_dirs="/opt/ibm/spectrum_mpi/jsm_pmix/bin/stock /usr/bin /usr/local/bin"
+      rm_default_dirs="/opt/ibm/spectrum_mpi/jsm_pmix/bin /usr/bin /usr/local/bin"
       for rm_dir in $rm_default_dirs; do
         if test ! -z "$rm_dir" -a ! -d "$rm_dir" ; then
           continue;
