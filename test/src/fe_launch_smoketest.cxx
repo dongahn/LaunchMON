@@ -236,6 +236,15 @@ main (int argc, char *argv[])
       launcher_argv[5] = strdup(argv[1]);
       launcher_argv[6] = NULL;
     }
+  else if (rmenv_str == std::string("RC_ibm_spectrum"))
+    {
+      numprocs_opt     = string("-p") + string(argv[2]);
+      launcher_argv    = (char **) malloc (4*sizeof(char*));
+      launcher_argv[0] = strdup(mylauncher);
+      launcher_argv[1] = strdup(numprocs_opt.c_str());
+      launcher_argv[2] = strdup(argv[1]);
+      launcher_argv[3] = NULL;
+    }
   else if (rmenv_str == std::string("RC_alps"))
     {
       numprocs_opt     = string("-n") + string(argv[2]);
